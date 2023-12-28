@@ -1,0 +1,18 @@
+[project]
+name = "telegram-bot"
+version = "0.1.0"
+authors = [
+    {name = "aber", email = "me@abersheeran.com"},
+]
+dependencies = [
+    "loguru>=0.7.2",
+    "cool>=0.4.0",
+    "python-telegram-bot>=20.7",
+    "python-dotenv>=1.0.0",
+]
+requires-python = ">=3.12.0"
+readme = "README.md"
+license = {text = "Apache-2.0"}
+
+[tool.pdm]
+package-type = "application"
