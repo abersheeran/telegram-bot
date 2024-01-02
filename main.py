@@ -34,9 +34,23 @@ async def ask(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     logger.debug(f"Update: {update}")
     assert update.message
     assert update.effective_user
-    parts: list[GeminiRequestPart] = [
-        {"text": update.message.text or update.message.caption or ""}
-    ]
+    message_text = update.message.text or update.message.caption or ""
+    if update.message.chat.type != telegram.Chat.PRIVATE:
+        for entity in update.message.entities:
+            if entity.type != entity.MENTION:
+                continue
+            if (
+                message_text[entity.offset : entity.offset + entity.length]
+                == entity.get_bot().name
+            ):
+                message_text = (
+                    message_text[: entity.offset]
+                    + message_text[entity.offset + entity.length :]
+                )
+                break
+        else:
+            return
+    parts: list[GeminiRequestPart] = [{"text": message_text}]
     photos: dict[str, PhotoSize] = {}
     for photo_size in update.message.photo:
         p = photos.get(photo_size.file_id, photo_size)
