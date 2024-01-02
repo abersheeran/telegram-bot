@@ -1,6 +1,7 @@
 import base64
 import os
 
+import telegram
 from loguru import logger
 from telegram import PhotoSize, Update
 from telegram.ext import (
@@ -59,7 +60,10 @@ async def ask(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         response_content = "怎么办？怎么办？派蒙连接不上提瓦特了。"
         logger.warning(f"Network error: {error}")
     else:
-        await update.message.reply_markdown_v2(response_content)
+        try:
+            await update.message.reply_markdown_v2(response_content)
+        except telegram.error.BadRequest:  # Sometime markdown is broken
+            await update.message.reply_text(response_content)
 
 
 async def post_init(app: Application) -> None:
