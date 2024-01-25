@@ -81,9 +81,7 @@ async def ask(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 
 async def post_init(app: Application) -> None:
-    await initial_gemini_config(
-        GEMINI_PRO_KEY, pro_url=GEMINI_PRO_URL, pro_vision_url=GEMINI_PRO_VISION_URL
-    )
+    await initial_gemini_config(GEMINI_PRO_KEY)
     logger.info("Gemini client initialized.")
 
 
@@ -94,8 +92,6 @@ if __name__ == "__main__":
 
     TG_BOT_TOKEN = os.environ["TG_BOT_TOKEN"]
     GEMINI_PRO_KEY = os.environ["GEMINI_PRO_KEY"]
-    GEMINI_PRO_URL = os.environ.get("GEMINI_PRO_URL")
-    GEMINI_PRO_VISION_URL = os.environ.get("GEMINI_PRO_VISION_URL")
 
     app = ApplicationBuilder().token(TG_BOT_TOKEN).post_init(post_init).build()
     app.add_handler(CommandHandler("echo", echo))

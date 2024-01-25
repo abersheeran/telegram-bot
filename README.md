@@ -10,10 +10,6 @@ Write the following in `.env` file:
 TG_BOT_TOKEN=<your bot token>
 
 GEMINI_PRO_KEY=<your gemini pro key>
-
-# Optional, if you need to use a reverse proxy
-GEMINI_PRO_URL=https://gemini.proxy/v1beta/models/gemini-pro:generateContent
-GEMINI_PRO_VISION_URL=https://gemini.proxy/v1beta/models/gemini-pro-vision:generateContent
 ```
 
 ## Usage
